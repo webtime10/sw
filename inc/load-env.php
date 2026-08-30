@@ -31,7 +31,7 @@ function sw_loc_load_env_file( $root_dir ) {
 		$name  = trim( substr( $line, 0, $eq_pos ) );
 		$value = trim( substr( $line, $eq_pos + 1 ) );
 
-		if ( '' === $name ) {
+		if ( '' === $name || '' === $value ) {
 			continue;
 		}
 
