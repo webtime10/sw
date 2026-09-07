@@ -87,12 +87,12 @@ $price_cards_dir  = function_exists( 'traveliz_pll_is_rtl' ) && traveliz_pll_is_
 
 			<?php if ( ! empty( $section_title ) ) : ?>
 				<h2 class="price-table-title"><?php echo wp_kses_post( $section_title ); ?></h2>
-			<?php endif; ?>
+			<?php endif   ; ?>
 
 			<div class="price-table-wrapper">
 
 				<div class="price-card-main">
-					<div class="price-card-main-header">
+			  		<div class="price-card-main-header">
 						<div class="price-card-main-header-left">
 							<img src="<?php echo esc_url( $top_img_url ); ?>" alt="<?php echo esc_attr( $top_img_alt ?: $top_input ); ?>">
 							<?php if ( ! empty( $top_input ) ) : ?>
