@@ -3,7 +3,7 @@
  * Plugin Name: AI Calculator
  * Plugin URI: https://example.com/
  * Description: Travel calculators — catalog in WP, data via REST to Laravel.
- * Version: 1.8.7
+ * Version: 1.8.12
  * Requires at least: 5.8
  * Requires PHP: 7.4
  * Author: Nordic
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'AI_CALCULATOR_FILE', __FILE__ );
 define( 'AI_CALCULATOR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'AI_CALCULATOR_URL', plugin_dir_url( __FILE__ ) );
-define( 'AI_CALCULATOR_VERSION', '1.8.7' );
+define( 'AI_CALCULATOR_VERSION', '1.8.12' );
 
 require_once AI_CALCULATOR_PATH . 'admin/core/class-ai-calculator-model.php';
 require_once AI_CALCULATOR_PATH . 'inc/class-ai-calculator-settings.php';
