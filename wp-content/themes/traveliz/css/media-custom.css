@@ -3063,6 +3063,11 @@ font-size: 16px;
         padding: 7px 9px;
         height: 70px;
     }
+    .table-price--v2 .price-row {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(120px, 0.8fr) !important;
+        height: auto !important;
+        row-gap: 0;
+    }
     .day-header {
     display: grid;
     grid-template-columns: 79px 1fr;
@@ -3907,6 +3912,12 @@ width: 29px;
         text-align: left;
         padding: 7px 9px;
         height: auto;
+        padding-bottom: 13px;
+    }
+    .table-price--v2 .price-row {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(120px, 0.8fr) !important;
+        height: auto !important;
+        row-gap: 0;
         padding-bottom: 13px;
     }
         .price-row-right {

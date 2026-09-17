@@ -108,8 +108,6 @@ $price_cards_dir  = function_exists( 'traveliz_pll_is_rtl' ) && traveliz_pll_is_
 								the_row();
 								$img1   = get_sub_field( 's_flexibol_price_image_1' );
 								$title  = get_sub_field( 's_flexibol_price_title' );
-								$inp1   = get_sub_field( 's_flexibol_price_input' );
-								$inp2   = get_sub_field( 's_flexibol_price_input_2' );
 								$price  = get_sub_field( 's_flexibol_price_item_price', false );
 								$night  = get_sub_field( 's_flexibol_price_item_night', false );
 
@@ -152,17 +150,9 @@ $price_cards_dir  = function_exists( 'traveliz_pll_is_rtl' ) && traveliz_pll_is_
 											<?php if ( ! empty( $title ) ) : ?>
 												<div class="price-row-text-title"><img class="price-row-star active-mobile" src="<?php echo esc_url( $icon_url ); ?>" alt="<?php echo esc_attr( $icon_alt ); ?>" width="16" height="16" loading="lazy" decoding="async"> <span><?php echo wp_kses_post( $title ); ?></span></div>
 											<?php endif; ?>
-											<?php if ( ! empty( $inp1 ) || ! empty( $inp2 ) || $star_url !== '' ) : ?>
+											<?php if ( $star_url !== '' ) : ?>
 												<div class="price-row-text-subtitle" dir="ltr">
-													<?php if ( ! empty( $inp1 ) ) : ?>
-														<?php echo wp_kses_post( $inp1 ); ?>
-													<?php endif; ?>
-													<?php if ( $star_url !== '' ) : ?>
-														<img class="price-row-star" src="<?php echo esc_url( $star_url ); ?>" alt="<?php echo esc_attr( $star_alt ); ?>" width="16" height="16" loading="lazy" decoding="async">
-													<?php endif; ?>
-													<?php if ( ! empty( $inp2 ) ) : ?>
-														<?php echo wp_kses_post( $inp2 ); ?>
-													<?php endif; ?>
+													<img class="price-row-star" src="<?php echo esc_url( $star_url ); ?>" alt="<?php echo esc_attr( $star_alt ); ?>" width="16" height="16" loading="lazy" decoding="async">
 												</div>
 											<?php endif; ?>
 										
