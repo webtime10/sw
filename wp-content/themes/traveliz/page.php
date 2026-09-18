@@ -36,8 +36,7 @@ get_header();
         alt=""
     >
     <h1>
-        <span><?php echo wp_kses_post( $h1_1 ); ?></span>
-        <span><?php echo wp_kses_post( $h1_2 ); ?></span>
+        <?php echo esc_html( get_the_title() ); ?>
     </h1>
     <div class="site-main-title-2">
         <strong><?php echo wp_kses_post( $sub ); ?></strong>

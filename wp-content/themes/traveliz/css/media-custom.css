@@ -2990,11 +2990,13 @@ width: 100%;
         height: auto !important;
         gap: 8px;
         padding: 14px 12px !important;
+        grid-template-columns: none !important;
     }
     .table-price--v2 .price-row-left,
     .table-price--v2 .price-row-details,
     .table-price--v2 .price-row-right {
-        width: 100%;
+        width: 100% !important;
+        max-width: 100%;
         margin-top: 0;
         text-align: start;
         white-space: normal;
