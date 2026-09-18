@@ -2982,6 +2982,24 @@ width: 100%;
     padding-bottom: 48px;
 }
  }
+@media (max-width: 720px) {
+    .table-price--v2 .price-row {
+        display: flex !important;
+        flex-direction: column;
+        width: 100%;
+        height: auto !important;
+        gap: 8px;
+        padding: 14px 12px !important;
+    }
+    .table-price--v2 .price-row-left,
+    .table-price--v2 .price-row-details,
+    .table-price--v2 .price-row-right {
+        width: 100%;
+        margin-top: 0;
+        text-align: start;
+        white-space: normal;
+    }
+}
 @media (max-width: 597px) {
         .reviews-section.reviews2.reviewsn .caruael_t .wrap-dots-wra {
         margin: 0 auto;
@@ -3064,9 +3082,19 @@ font-size: 16px;
         height: 70px;
     }
     .table-price--v2 .price-row {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(120px, 0.8fr) !important;
+        display: flex !important;
+        flex-direction: column;
+        width: 100%;
         height: auto !important;
-        row-gap: 0;
+        gap: 8px;
+    }
+    .table-price--v2 .price-row-left,
+    .table-price--v2 .price-row-details,
+    .table-price--v2 .price-row-right {
+        width: 100%;
+        margin-top: 0;
+        text-align: start;
+        white-space: normal;
     }
     .day-header {
     display: grid;
@@ -3915,10 +3943,20 @@ width: 29px;
         padding-bottom: 13px;
     }
     .table-price--v2 .price-row {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(120px, 0.8fr) !important;
+        display: flex !important;
+        flex-direction: column;
+        width: 100%;
         height: auto !important;
-        row-gap: 0;
+        gap: 8px;
         padding-bottom: 13px;
+    }
+    .table-price--v2 .price-row-left,
+    .table-price--v2 .price-row-details,
+    .table-price--v2 .price-row-right {
+        width: 100%;
+        margin-top: 0;
+        text-align: start;
+        white-space: normal;
     }
         .price-row-right {
         font-size: 18px;
