@@ -42,8 +42,8 @@ function fcc_get_direction_cards_data() {
 
 	foreach ( $rows as $row ) {
 		$direction_id = (int) $row->direction_id;
-		$city         = ! empty( $row->direction_name ) ? (string) $row->direction_name : '';
-		if ( $direction_id <= 0 || '' === $city ) {
+		$post_title   = ! empty( $row->post_name ) ? (string) $row->post_name : '';
+		if ( $direction_id <= 0 || '' === $post_title ) {
 			continue;
 		}
 
@@ -53,14 +53,12 @@ function fcc_get_direction_cards_data() {
 		$places       = fcc_decode_id_list( $row->places, true );
 		$image        = ! empty( $row->image ) ? (string) $row->image : '';
 		$url          = ! empty( $row->url ) ? (string) $row->url : '';
-		$post_title   = ! empty( $row->post_name ) ? (string) $row->post_name : '';
 
 		$cards[] = array(
 			'page_id'      => $post_id,
 			'post_type'    => 'fcc_internal_post',
 			'direction_id' => $direction_id,
-			'title'        => $city,
-			'post_title'   => $post_title,
+			'title'        => $post_title,
 			'url'          => $url,
 			'image'        => $image,
 			'tags'         => $places,

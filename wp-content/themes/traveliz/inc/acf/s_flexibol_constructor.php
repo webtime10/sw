@@ -75,7 +75,7 @@ function s_flexibol_register_constructor_fields() {
 					'layout_s_flexibol_custom_reviews' => array(
 						'key'     => 'layout_s_flexibol_custom_reviews',
 						'name'    => 's_flexibol_custom_reviews',
-						'label'   => 'общие отзывы',
+						'label'   => 'общие отзывы (из общих)',
 						'display' => 'block',
 						'sub_fields' => array(
 							array(
@@ -85,6 +85,58 @@ function s_flexibol_register_constructor_fields() {
 								'type'          => 'true_false',
 								'ui'            => 1,
 								'default_value' => 1,
+							),
+						),
+					),
+					// Общие блоки (Options / template-parts), как «общие отзывы»
+					'layout_s_flexibol_what_you_will_get' => array(
+						'key'     => 'layout_s_flexibol_what_you_will_get',
+						'name'    => 's_flexibol_what_you_will_get',
+						'label'   => 'Что вы получите / מה תקבלו (из общих)',
+						'display' => 'block',
+						'sub_fields' => array(
+							array(
+								'key'           => 'field_s_flexibol_what_you_will_get_toggle',
+								'label'         => 'Показывать блок',
+								'name'          => 'what_you_will_get_show',
+								'type'          => 'true_false',
+								'ui'            => 1,
+								'default_value' => 1,
+								'instructions'  => 'Контент из Options: title_what_you_will_get + item_what_you_will_get',
+							),
+						),
+					),
+					'layout_s_flexibol_how_it_works' => array(
+						'key'     => 'layout_s_flexibol_how_it_works',
+						'name'    => 's_flexibol_how_it_works',
+						'label'   => 'Как мы работаем (из общих)',
+						'display' => 'block',
+						'sub_fields' => array(
+							array(
+								'key'           => 'field_s_flexibol_how_it_works_toggle',
+								'label'         => 'Показывать блок',
+								'name'          => 'how_it_works_show',
+								'type'          => 'true_false',
+								'ui'            => 1,
+								'default_value' => 1,
+								'instructions'  => 'Контент: Settings → How it works / Как мы работаем (форма CF7 f2e5507)',
+							),
+						),
+					),
+					'layout_s_flexibol_route_example' => array(
+						'key'     => 'layout_s_flexibol_route_example',
+						'name'    => 's_flexibol_route_example',
+						'label'   => 'пример маршрута (общее)',
+						'display' => 'block',
+						'sub_fields' => array(
+							array(
+								'key'           => 'field_s_flexibol_route_example_toggle',
+								'label'         => 'Показывать блок',
+								'name'          => 'route_example_show',
+								'type'          => 'true_false',
+								'ui'            => 1,
+								'default_value' => 1,
+								'instructions'  => 'Контент из Options: route_slider_3d (title, text, slides, button…)',
 							),
 						),
 					),
@@ -1021,8 +1073,8 @@ function s_flexibol_register_constructor_fields() {
 										'key'   => 'field_s_flexibol_attractions_card_text',
 										'label' => 'Card text',
 										'name'  => 's_flexibol_attractions_text',
-										'type'  => 'textarea',
-										'rows'  => 4,
+										'type'  => 'wysiwyg',
+										'tabs'  => 'all',
 									),
 									array(
 										'key'   => 'field_s_flexibol_attractions_card_button_text',
@@ -1405,12 +1457,6 @@ function s_flexibol_register_constructor_fields() {
 										'key'   => 'field_s_flexibol_price_table_2_item_price',
 										'label' => 'Price',
 										'name'  => 's_flexibol_price_table_2_item_price',
-										'type'  => 'text',
-									),
-									array(
-										'key'   => 'field_s_flexibol_price_table_2_item_night',
-										'label' => 'Night',
-										'name'  => 's_flexibol_price_table_2_item_night',
 										'type'  => 'text',
 									),
 									array(

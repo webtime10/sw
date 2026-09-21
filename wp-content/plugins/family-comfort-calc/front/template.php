@@ -88,7 +88,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$rating_label = number_format( $rating, 1, '.', '' );
 				$rating_pct   = (int) round( ( $rating / 5 ) * 100 );
 				$title        = ! empty( $card['title'] ) ? (string) $card['title'] : '';
-				$post_title   = ! empty( $card['post_title'] ) ? (string) $card['post_title'] : '';
 				$url          = ! empty( $card['url'] ) ? (string) $card['url'] : '';
 				$image        = ! empty( $card['image'] ) ? (string) $card['image'] : '';
 				$tags         = ! empty( $card['tags'] ) && is_array( $card['tags'] ) ? $card['tags'] : array();
@@ -108,9 +107,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					<header class="ai-family-comfort__card-head">
 						<h4 class="ai-family-comfort__card-title"><?php echo esc_html( $title ); ?></h4>
-						<?php if ( '' !== $post_title && $post_title !== $title ) : ?>
-							<p class="ai-family-comfort__card-subtitle"><?php echo esc_html( $post_title ); ?></p>
-						<?php endif; ?>
 					</header>
 
 					<?php
