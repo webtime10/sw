@@ -22,20 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="ai-family-comfort__panel">
 			<form class="ai-family-comfort__form" action="#" method="get">
 				<div class="ai-family-comfort__field">
-					<label for="fcc-family-comfort-age"><?php esc_html_e( 'Возраст детей', 'family-comfort-calc' ); ?></label>
-					<select id="fcc-family-comfort-age" name="fcc_age" <?php disabled( ! $has_data ); ?>>
-						<?php if ( ! $has_data ) : ?>
-							<option value=""><?php esc_html_e( 'Нет данных', 'family-comfort-calc' ); ?></option>
-						<?php else : ?>
-							<option value="" selected><?php esc_html_e( 'Выберите возраст детей', 'family-comfort-calc' ); ?></option>
-							<?php foreach ( $age_options as $value => $label ) : ?>
-								<option value="<?php echo esc_attr( (string) $value ); ?>"><?php echo esc_html( $label ); ?></option>
-							<?php endforeach; ?>
-						<?php endif; ?>
-					</select>
-				</div>
-
-				<div class="ai-family-comfort__field">
 					<label for="fcc-family-comfort-interest"><?php esc_html_e( 'Интересы', 'family-comfort-calc' ); ?></label>
 					<select id="fcc-family-comfort-interest" name="fcc_interest" <?php disabled( ! $has_data ); ?>>
 						<?php if ( ! $has_data ) : ?>
@@ -43,6 +29,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php else : ?>
 							<option value="" selected><?php esc_html_e( 'Выберите интерес', 'family-comfort-calc' ); ?></option>
 							<?php foreach ( $interest_options as $value => $label ) : ?>
+								<option value="<?php echo esc_attr( (string) $value ); ?>"><?php echo esc_html( $label ); ?></option>
+							<?php endforeach; ?>
+						<?php endif; ?>
+					</select>
+				</div>
+
+				<div class="ai-family-comfort__field">
+					<label for="fcc-family-comfort-age"><?php esc_html_e( 'Возраст детей', 'family-comfort-calc' ); ?></label>
+					<select id="fcc-family-comfort-age" name="fcc_age" <?php disabled( ! $has_data ); ?>>
+						<?php if ( ! $has_data ) : ?>
+							<option value=""><?php esc_html_e( 'Нет данных', 'family-comfort-calc' ); ?></option>
+						<?php else : ?>
+							<option value="" selected><?php esc_html_e( 'Выберите возраст детей', 'family-comfort-calc' ); ?></option>
+							<?php foreach ( $age_options as $value => $label ) : ?>
 								<option value="<?php echo esc_attr( (string) $value ); ?>"><?php echo esc_html( $label ); ?></option>
 							<?php endforeach; ?>
 						<?php endif; ?>
@@ -62,7 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</h3>
 
 		<p class="ai-family-comfort__empty" id="fcc-family-comfort-empty" hidden>
-			<?php esc_html_e( 'Для выбранных параметров пока нет направлений. Назначьте категории и направления в метабоксе Family Comfort на страницах.', 'family-comfort-calc' ); ?>
+			<?php esc_html_e( 'Для выбранных параметров пока нет направлений. Добавьте посты в Family Comfort → Посты.', 'family-comfort-calc' ); ?>
 		</p>
 
 		<div class="ai-family-comfort__slider" id="fcc-family-comfort-slider">
@@ -88,6 +88,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$rating_label = number_format( $rating, 1, '.', '' );
 				$rating_pct   = (int) round( ( $rating / 5 ) * 100 );
 				$title        = ! empty( $card['title'] ) ? (string) $card['title'] : '';
+				$post_title   = ! empty( $card['post_title'] ) ? (string) $card['post_title'] : '';
 				$url          = ! empty( $card['url'] ) ? (string) $card['url'] : '';
 				$image        = ! empty( $card['image'] ) ? (string) $card['image'] : '';
 				$tags         = ! empty( $card['tags'] ) && is_array( $card['tags'] ) ? $card['tags'] : array();
@@ -102,11 +103,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php endif; ?>
 				>
 					<?php if ( '' !== $url ) : ?>
-						<a class="ai-family-comfort__card-link" href="<?php echo esc_url( $url ); ?>" aria-label="<?php echo esc_attr( $title ); ?>" tabindex="-1"></a>
+						<a class="ai-family-comfort__card-link" href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $title ); ?>" tabindex="-1"></a>
 					<?php endif; ?>
 
 					<header class="ai-family-comfort__card-head">
 						<h4 class="ai-family-comfort__card-title"><?php echo esc_html( $title ); ?></h4>
+						<?php if ( '' !== $post_title && $post_title !== $title ) : ?>
+							<p class="ai-family-comfort__card-subtitle"><?php echo esc_html( $post_title ); ?></p>
+						<?php endif; ?>
 					</header>
 
 					<?php
@@ -122,9 +126,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 								$label       = ! empty( $tag['label'] ) ? (string) $tag['label'] : '';
 								?>
 								<?php if ( ! empty( $tag['url'] ) ) : ?>
-									<a class="fcc-tag<?php echo esc_attr( $extra_class ); ?>" href="<?php echo esc_url( $tag['url'] ); ?>"><?php echo esc_html( $label ); ?></a>
+									<a class="fcc-tag<?php echo esc_attr( $extra_class ); ?>" href="<?php echo esc_url( $tag['url'] ); ?>" target="_blank" rel="noopener noreferrer" title="<?php echo esc_attr( $label ); ?>">
+										<?php echo esc_html( $label ); ?>
+									</a>
 								<?php else : ?>
-									<span class="fcc-tag<?php echo esc_attr( $extra_class ); ?>"><?php echo esc_html( $label ); ?></span>
+									<span class="fcc-tag<?php echo esc_attr( $extra_class ); ?>" title="<?php echo esc_attr( $label ); ?>">
+										<?php echo esc_html( $label ); ?>
+									</span>
 								<?php endif; ?>
 							<?php endforeach; ?>
 						<?php endif; ?>
@@ -143,9 +151,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php endif; ?>
 
 					<div class="ai-family-comfort__rating" aria-label="<?php echo esc_attr( sprintf( __( 'Рейтинг %s из 5', 'family-comfort-calc' ), $rating_label ) ); ?>">
-						<small>5.0 /</small>
-						<span aria-hidden="true">★</span>
 						<strong><?php echo esc_html( $rating_label ); ?></strong>
+						<span aria-hidden="true">★</span>
+						<small>/ 5.0</small>
 					</div>
 					<div class="ai-family-comfort__bar" aria-hidden="true">
 						<span style="width: <?php echo esc_attr( (string) max( 0, min( 100, $rating_pct ) ) ); ?>%;"></span>

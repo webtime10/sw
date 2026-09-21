@@ -217,7 +217,7 @@ html {
 	border-radius: 16px;
 	background: #fff;
 	box-shadow: 0 10px 30px rgba(31, 41, 51, 0.06);
-	--fcc-tags-slot-height: calc(38px * 3 + 2px * 2);
+	--fcc-tags-slot-height: calc(38px * 2 + 2px);
 }
 
 .ai-family-comfort__card[hidden] {
@@ -387,6 +387,8 @@ html {
 	text-decoration: none;
 	transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
+
+/* Места / теги — серые pill как в макете (стили выше: .ai-family-comfort__tags .fcc-tag) */
 
 .fcc-tags-more {
 	grid-column: 1 / -1;
