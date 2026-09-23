@@ -3,7 +3,7 @@
  * Plugin Name: Family Comfort Calc
  * Plugin URI:  https://switzerland-expert.com
  * Description: Калькулятор семейного комфорта: категории и посты (MVC админка в стиле OpenCart).
- * Version:     1.5.6
+ * Version:     1.5.7
  * Author:      WebTime
  * Text Domain: family-comfort-calc
  * Domain Path: /languages

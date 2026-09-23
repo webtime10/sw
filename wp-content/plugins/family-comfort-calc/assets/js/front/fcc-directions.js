@@ -427,15 +427,7 @@
 				labels.push(text);
 			}
 		});
-		if (!labels.length) {
-			valueEl.textContent = placeholder;
-			return;
-		}
-		if (labels.length === 1) {
-			valueEl.textContent = labels[0];
-			return;
-		}
-		valueEl.textContent = labels[0] + ' +' + (labels.length - 1);
+		valueEl.textContent = labels.length ? labels.join(', ') : placeholder;
 	}
 
 	function closeMs(ms) {
