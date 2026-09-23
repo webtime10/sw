@@ -17,8 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function fcc_get_card_rating( $post_id = 0 ) {
 	$post_id = (int) $post_id;
-	// Взвешенный пул: 5.0 преобладает.
-	$pool = array(
+	$pool    = array(
 		5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
 		4.9, 4.9, 4.9,
 		4.8, 4.8,
@@ -31,14 +30,17 @@ function fcc_get_card_rating( $post_id = 0 ) {
 }
 
 /**
+ * Карточки из постов плагина. Теги — только со WP-страниц (старые ручные places игнорируются).
+ *
  * @return array<int, array<string, mixed>>
  */
 function fcc_get_direction_cards_data() {
 	require_once FCC_PATH . 'admin/models/class-fcc-post-model.php';
 
-	$model = new FCC_Post_Model();
-	$rows  = $model->get_enabled_for_front( fcc_get_default_language_id() );
-	$cards = array();
+	$model   = new FCC_Post_Model();
+	$rows    = $model->get_enabled_for_front( fcc_get_default_language_id() );
+	$from_wp = fcc_get_wp_page_contributions_by_direction();
+	$cards   = array();
 
 	foreach ( $rows as $row ) {
 		$direction_id = (int) $row->direction_id;
@@ -47,12 +49,44 @@ function fcc_get_direction_cards_data() {
 			continue;
 		}
 
-		$post_id      = (int) $row->post_id;
-		$age_ids      = fcc_decode_id_list( $row->age_ids );
-		$interest_ids = fcc_decode_id_list( $row->interest_ids );
-		$places       = fcc_decode_id_list( $row->places, true );
-		$image        = ! empty( $row->image ) ? (string) $row->image : '';
-		$url          = ! empty( $row->url ) ? (string) $row->url : '';
+		$post_id = (int) $row->post_id;
+		$image   = ! empty( $row->image ) ? (string) $row->image : '';
+		$url     = ! empty( $row->url ) ? (string) $row->url : '';
+
+		$normalized_tags = array();
+		if ( ! empty( $from_wp[ $direction_id ]['tags'] ) && is_array( $from_wp[ $direction_id ]['tags'] ) ) {
+			foreach ( $from_wp[ $direction_id ]['tags'] as $tag ) {
+				$label = isset( $tag['label'] ) ? (string) $tag['label'] : '';
+				if ( '' === $label ) {
+					continue;
+				}
+				$normalized_tags[] = array(
+					'label'        => $label,
+					'url'          => isset( $tag['url'] ) ? (string) $tag['url'] : '',
+					'age_ids'      => isset( $tag['age_ids'] ) && is_array( $tag['age_ids'] )
+						? array_values( array_unique( array_filter( array_map( 'intval', $tag['age_ids'] ) ) ) )
+						: array(),
+					'interest_ids' => isset( $tag['interest_ids'] ) && is_array( $tag['interest_ids'] )
+						? array_values( array_unique( array_filter( array_map( 'intval', $tag['interest_ids'] ) ) ) )
+						: array(),
+				);
+			}
+		}
+
+		$age_ids      = array();
+		$interest_ids = array();
+		foreach ( $normalized_tags as $tag ) {
+			foreach ( $tag['age_ids'] as $age_id ) {
+				if ( ! in_array( $age_id, $age_ids, true ) ) {
+					$age_ids[] = $age_id;
+				}
+			}
+			foreach ( $tag['interest_ids'] as $interest_id ) {
+				if ( ! in_array( $interest_id, $interest_ids, true ) ) {
+					$interest_ids[] = $interest_id;
+				}
+			}
+		}
 
 		$cards[] = array(
 			'page_id'      => $post_id,
@@ -61,7 +95,7 @@ function fcc_get_direction_cards_data() {
 			'title'        => $post_title,
 			'url'          => $url,
 			'image'        => $image,
-			'tags'         => $places,
+			'tags'         => $normalized_tags,
 			'age_ids'      => $age_ids,
 			'interest_ids' => $interest_ids,
 			'rating'       => fcc_get_card_rating( $post_id ),

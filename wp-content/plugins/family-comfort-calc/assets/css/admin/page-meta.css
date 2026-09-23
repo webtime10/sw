@@ -71,7 +71,8 @@
 	margin-bottom: 16px;
 }
 
-.fcc-page-meta-checkboxes {
+.fcc-page-meta-checkboxes,
+.fcc-page-meta-radios {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
@@ -86,7 +87,8 @@
 	overflow-y: auto;
 }
 
-.fcc-page-meta-checkbox {
+.fcc-page-meta-checkbox,
+.fcc-page-meta-radio {
 	display: flex;
 	align-items: center;
 	gap: 8px;
@@ -94,9 +96,73 @@
 	cursor: pointer;
 }
 
-.fcc-page-meta-checkbox input {
+.fcc-page-meta-checkbox input,
+.fcc-page-meta-radio input {
 	margin: 0;
 }
+
+.fcc-wp-page-meta {
+	padding: 4px 0 8px;
+}
+
+.fcc-wp-page-meta .fcc-page-meta-row--categories {
+	margin-bottom: 16px;
+}
+
+.fcc-page-meta-auto-tag {
+	margin: 8px 0 0;
+	padding: 14px 0 4px;
+	border-top: 1px solid #dcdcde;
+}
+
+.fcc-page-meta-auto-tag .regular-text {
+	max-width: 420px;
+	width: 100%;
+}
+
+.fcc-auto-tags-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 0 0 12px;
+}
+
+.fcc-auto-tag {
+	padding: 10px 12px;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	background: #fff;
+}
+
+.fcc-auto-tag__title {
+	font-weight: 600;
+	font-size: 14px;
+	margin: 0 0 4px;
+}
+
+.fcc-auto-tag__url {
+	font-size: 12px;
+	margin: 0 0 6px;
+	word-break: break-all;
+}
+
+.fcc-auto-tag__url a {
+	color: #2271b1;
+	text-decoration: none;
+}
+
+.fcc-auto-tag__params {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	font-size: 12px;
+	color: #50575e;
+}
+
+.fcc-auto-tags-empty {
+	margin: 0 0 8px;
+}
+
 
 .fcc-page-meta-select-actions {
 	margin: 6px 0 0;

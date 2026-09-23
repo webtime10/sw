@@ -55,16 +55,6 @@ class FCC_Post_Controller extends FCC_Controller {
 			$text = (string) $desc[ $lang_id ]->description;
 		}
 
-		$places = array();
-		$age_ids = array();
-		$interest_ids = array();
-
-		if ( $post ) {
-			$places       = fcc_decode_id_list( $post->places, true );
-			$age_ids      = fcc_decode_id_list( $post->age_ids );
-			$interest_ids = fcc_decode_id_list( $post->interest_ids );
-		}
-
 		$this->render(
 			'post/form',
 			array(
@@ -72,12 +62,6 @@ class FCC_Post_Controller extends FCC_Controller {
 				'post'           => $post,
 				'name'           => $name,
 				'description'    => $text,
-				'places'         => $places,
-				'age_ids'        => $age_ids,
-				'interest_ids'   => $interest_ids,
-				'directions'     => fcc_get_categories( 'direction' ),
-				'ages'           => fcc_get_categories( 'age' ),
-				'interests'      => fcc_get_categories( 'interest' ),
 				'header_buttons' => $this->header_btn_save( 'fcc-form-post' ),
 			)
 		);
@@ -100,21 +84,44 @@ class FCC_Post_Controller extends FCC_Controller {
 			$this->redirect( 'form', $id );
 		}
 
+		$existing = $id > 0 ? $this->model->get( $id ) : null;
+
 		$direction_id = isset( $_POST['direction_id'] ) ? (int) $_POST['direction_id'] : 0;
+		if ( $direction_id <= 0 && $existing ) {
+			$direction_id = (int) $existing->direction_id;
+		}
+		if ( $direction_id <= 0 ) {
+			$direction_id = fcc_find_direction_id_by_name( $name );
+		}
 		if ( $direction_id <= 0 || ! fcc_get_category( 'direction', $direction_id ) ) {
-			$this->set_flash( 'error', __( 'Выберите направление.', 'family-comfort-calc' ) );
+			$this->set_flash( 'error', __( 'Не найден город (направление) с таким названием. Создайте направление или укажите точное имя города.', 'family-comfort-calc' ) );
 			$this->redirect( 'form', $id );
 		}
 
-		$age_raw = isset( $_POST['age_ids'] ) && is_array( $_POST['age_ids'] ) ? wp_unslash( $_POST['age_ids'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$int_raw = isset( $_POST['interest_ids'] ) && is_array( $_POST['interest_ids'] ) ? wp_unslash( $_POST['interest_ids'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// Возраст / интересы / теги — только со WP-страниц.
+		$auto_tags    = fcc_get_wp_page_tags_for_direction( $direction_id );
+		$places       = array();
+		$age_ids      = array();
+		$interest_ids = array();
 
-		$age_ids      = fcc_sanitize_page_category_ids( 'age', $age_raw );
-		$interest_ids = fcc_sanitize_page_category_ids( 'interest', $int_raw );
-
-		$tags_raw = isset( $_POST['fcc_page_tags_json'] ) ? wp_unslash( $_POST['fcc_page_tags_json'] ) : '[]'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$decoded  = json_decode( (string) $tags_raw, true );
-		$places   = fcc_sanitize_page_tags( is_array( $decoded ) ? $decoded : array() );
+		foreach ( $auto_tags as $tag ) {
+			$places[] = array(
+				'label' => $tag['label'],
+				'url'   => $tag['url'],
+			);
+			foreach ( $tag['age_ids'] as $age_id ) {
+				$age_id = (int) $age_id;
+				if ( $age_id > 0 && ! in_array( $age_id, $age_ids, true ) ) {
+					$age_ids[] = $age_id;
+				}
+			}
+			foreach ( $tag['interest_ids'] as $interest_id ) {
+				$interest_id = (int) $interest_id;
+				if ( $interest_id > 0 && ! in_array( $interest_id, $interest_ids, true ) ) {
+					$interest_ids[] = $interest_id;
+				}
+			}
+		}
 
 		$data = array(
 			'direction_id' => $direction_id,

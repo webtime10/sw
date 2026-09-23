@@ -3,7 +3,7 @@
  * Plugin Name: Family Comfort Calc
  * Plugin URI:  https://switzerland-expert.com
  * Description: Калькулятор семейного комфорта: категории и посты (MVC админка в стиле OpenCart).
- * Version:     1.4.5
+ * Version:     1.5.6
  * Author:      WebTime
  * Text Domain: family-comfort-calc
  * Domain Path: /languages
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FCC_VERSION', '1.4.5' );
+define( 'FCC_VERSION', '1.5.7' );
 define( 'FCC_FILE', __FILE__ );
 define( 'FCC_PATH', plugin_dir_path( __FILE__ ) );
 define( 'FCC_URL', plugin_dir_url( __FILE__ ) );
@@ -53,6 +53,8 @@ final class Family_Comfort_Calc {
 
 		if ( is_admin() ) {
 			require_once FCC_PATH . 'admin/bootstrap.php';
+			require_once FCC_PATH . 'admin/class-fcc-page-meta-box.php';
+			FCC_Page_Meta_Box::register();
 			add_action( 'admin_menu', array( $this, 'register_menu' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin' ) );
 			add_action( 'admin_init', array( 'FCC_Router', 'handle_early_save' ) );
@@ -188,6 +190,22 @@ final class Family_Comfort_Calc {
 						'needPage'   => __( 'Сначала выберите страницу', 'family-comfort-calc' ),
 						'needName'   => __( 'Введите название достопримечательности', 'family-comfort-calc' ),
 					),
+				)
+			);
+
+			wp_enqueue_script(
+				'fcc-post-auto-tags',
+				FCC_URL . 'assets/js/admin/post-auto-tags.js',
+				array( 'jquery' ),
+				FCC_VERSION,
+				true
+			);
+			wp_localize_script(
+				'fcc-post-auto-tags',
+				'fccAutoTags',
+				array(
+					'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+					'nonce'   => wp_create_nonce( 'fcc_direction_auto_tags' ),
 				)
 			);
 		}
