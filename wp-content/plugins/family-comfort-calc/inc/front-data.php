@@ -10,23 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Рейтинг карточки: 4.5–5.0, чаще ближе к 5.
+ * Рейтинг карточки: цикл 5.0, 5.0, 4.8, 4.8, 4.7.
  *
- * @param int $post_id
+ * @param int $index порядковый индекс карточки (0-based)
  * @return float
  */
-function fcc_get_card_rating( $post_id = 0 ) {
-	$post_id = (int) $post_id;
-	$pool    = array(
-		5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
-		4.9, 4.9, 4.9,
-		4.8, 4.8,
-		4.7,
-		4.6,
-		4.5,
-	);
-	$index = $post_id > 0 ? abs( $post_id ) % count( $pool ) : mt_rand( 0, count( $pool ) - 1 );
-	return (float) $pool[ $index ];
+function fcc_get_card_rating( $index = 0 ) {
+	$pool  = array( 5.0, 5.0, 4.8, 4.8, 4.7 );
+	$index = abs( (int) $index );
+	return (float) $pool[ $index % count( $pool ) ];
 }
 
 /**
@@ -98,7 +90,7 @@ function fcc_get_direction_cards_data() {
 			'tags'         => $normalized_tags,
 			'age_ids'      => $age_ids,
 			'interest_ids' => $interest_ids,
-			'rating'       => fcc_get_card_rating( $post_id ),
+			'rating'       => fcc_get_card_rating( count( $cards ) ),
 		);
 	}
 

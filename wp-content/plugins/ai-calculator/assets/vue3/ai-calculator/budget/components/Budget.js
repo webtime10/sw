@@ -537,6 +537,34 @@ Vue непрерывно караулит переменную step. Как то
 				var comfortKeys = constants && constants.COMFORT
 					? constants.COMFORT
 					: { DESHEVLE: 'deshevle', SREDNII: 'sredniii', VISOKII: 'visokii' };
+				var housingKeys = constants && constants.HOUSING
+					? constants.HOUSING
+					: { OTELI: 'oteli', APARTAMENTI: 'apartamenti' };
+				var housingType = this.answers.catalog.housing && this.answers.catalog.housing.housingType
+					? String(this.answers.catalog.housing.housingType)
+					: '';
+				var isHotels = housingType === housingKeys.OTELI || housingType === 'oteli';
+
+				// Отели (bb_family_rate / city_hotel_rate / premium_hotel_rate)
+				if (isHotels) {
+					return [
+						{
+							value: comfortKeys.DESHEVLE,
+							label: 'Эконом / Доступный — загородные B&B, уютные семейные гестхаусы и альпийские отельчики.',
+							image: this.getBudgetImage(comfortKeys.DESHEVLE),
+						},
+						{
+							value: comfortKeys.SREDNII,
+							label: 'Средний — хорошая стандартная классика 3–4*.',
+							image: this.getBudgetImage(comfortKeys.SREDNII),
+						},
+						{
+							value: comfortKeys.VISOKII,
+							label: 'Высокий — качественные 4–5* отели и шале (но без неадекватных люкс-выбросов по $2,000+).',
+							image: this.getBudgetImage(comfortKeys.VISOKII),
+						},
+					];
+				}
 
 				return [
 					{
@@ -750,6 +778,26 @@ Vue непрерывно караулит переменную step. Как то
 				var comfortKeys = constants && constants.COMFORT
 					? constants.COMFORT
 					: { DESHEVLE: 'deshevle', SREDNII: 'sredniii', VISOKII: 'visokii' };
+				var housingKeys = constants && constants.HOUSING
+					? constants.HOUSING
+					: { OTELI: 'oteli', APARTAMENTI: 'apartamenti' };
+				var housingType = this.answers.catalog.housing && this.answers.catalog.housing.housingType
+					? String(this.answers.catalog.housing.housingType)
+					: '';
+				var isHotels = housingType === housingKeys.OTELI || housingType === 'oteli';
+
+				if (isHotels) {
+					if (value === comfortKeys.DESHEVLE) {
+						return 'Эконом / Доступный';
+					}
+					if (value === comfortKeys.SREDNII) {
+						return 'Средний';
+					}
+					if (value === comfortKeys.VISOKII) {
+						return 'Высокий';
+					}
+					return '';
+				}
 
 				if (value === comfortKeys.DESHEVLE) {
 					return 'эконом';
