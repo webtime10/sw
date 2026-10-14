@@ -10,7 +10,7 @@ require get_template_directory() . '/inc/page-comments.php';
 
 if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( '_S_VERSION', '1.0.6' );
+	define( '_S_VERSION', '1.0.7' );
 }
 
 add_filter( 'acf/format_value', 'traveliz_arabic_bidi_filter', 10, 3 );

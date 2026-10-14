@@ -145,11 +145,15 @@ get_header();
               
             }
 
-            // Каждый layout — свой .flexibol-block (как у остальных страниц), чтобы кривой HTML одного блока не ломал соседние.
-           echo '<div class="flexibol-block">';
-            get_template_part( 'flexibol/' . $flexibol_map[ $layout ] );
-               echo '</div>'; 
-       
+            // route_example — как на главной, без .flexibol-block (иначе 3D-карусель может схлопнуться).
+            if ( $layout === 's_flexibol_route_example' ) {
+                get_template_part( 'flexibol/' . $flexibol_map[ $layout ] );
+            } else {
+                echo '<div class="flexibol-block">';
+                get_template_part( 'flexibol/' . $flexibol_map[ $layout ] );
+                echo '</div>';
+            }
+
         endwhile;
     endif;
 
